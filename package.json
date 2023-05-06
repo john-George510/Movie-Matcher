@@ -1,0 +1,26 @@
+{
+  "name": "movie-matcher",
+  "version": "1.0.0",
+  "description": "![Electron Notion](https://user-images.githubusercontent.com/64391274/235363274-375ce61c-721f-4543-a150-1b99525d54ac.png)",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/john-George510/Movie-Matcher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/john-George510/Movie-Matcher/issues"
+  },
+  "homepage": "https://github.com/john-George510/Movie-Matcher#readme",
+  "devDependencies": {
+    "electron": "^24.2.0"
+  },
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
