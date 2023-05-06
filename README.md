@@ -5,7 +5,7 @@
 Long Description about project. This project do that. This project is awesome...
 ## Team members
 [John George Chelamattom](https://github.com/john-George510)
-2. Adwaith H R [https://github.com/adwaithhr]
+[Adwaith H R](https://github.com/adwaithhr)
 ## Link to product walkthrough
 [link to video]
 ## How it Works ?
