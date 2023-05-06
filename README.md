@@ -4,7 +4,7 @@
 # Project Name
 Long Description about project. This project do that. This project is awesome...
 ## Team members
-[John George Chelamattom](https://github.com/john-George510)
+[John George Chelamattom](https://github.com/john-George510)\n
 [Adwaith H R](https://github.com/adwaithhr)
 ## Link to product walkthrough
 [link to video]
