@@ -7,7 +7,7 @@ function createWindow () {
     var rq = require('request-promise');
     var mainAddr = 'http://localhost:8000/';
     var openWindow = function() {
-        mainWindow = new BrowserWindow({ width: 800, height: 600 })
+        mainWindow = new BrowserWindow({ width: 800, height: 600 , fullscreen: true})
         mainWindow.loadURL('http://localhost:8000');
 
         mainWindow.on('closed', function() {
