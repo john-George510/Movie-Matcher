@@ -127,12 +127,28 @@ def movie_details(movie):
 
 
 # # code to add new actors to database
-# # actors_dir = 'Actors'
-# # actors=os.listdir(actors_dir)
-# # for actor in actors:
-# #     actor_images = os.listdir(os.path.join(actors_dir, actor))
-# #     for image in actor_images:
-# #         actor_image = face_recognition.load_image_file(os.path.join(actors_dir, actor, image))
-# #         encoding=face_recognition.face_encodings(actor_image)[0]
-# #         new_actor = Actor.objects.create(name=actor, encoding=encoding)
-# #         new_actor.save()
+
+# actor_names=[]
+# actors=Actor.objects.all()
+# for actor in actors:
+#      if actor.name not in actor_names:
+#              actor_names.append(actor.name)
+
+# actors_dir = 'Actors'
+# actors=os.listdir(actors_dir)
+# for actor in actors:
+#     actor_images = os.listdir(os.path.join(actors_dir, actor))
+#     if actor not in actor_names:
+#         for image in actor_images:
+#             actor_names.append(actor)
+#             print(actor,image,"is encoding")
+#             actor_image = face_recognition.load_image_file(os.path.join(actors_dir, actor, image))
+#             try:
+#                 encoding = face_recognition.face_encodings(actor_image)[0]
+#             except IndexError:
+#                 print("No face found in the image")
+#             new_actor = Actor.objects.create(name=actor, encoding=encoding)
+#             new_actor.save()        
+#     else:
+#         print("in else")
+        
