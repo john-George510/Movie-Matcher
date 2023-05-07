@@ -15,12 +15,13 @@ Django - 4.2.1
 ElectronJS - 15.0.0  
 dlib - 19.24.1  
 OpenCV - 4.5.4  
+Node.js - 14.18.1
 ## How to configure
 Clone the repository: git clone https://github.com/john-George510/Movie-Matcher.git  
-Create and activate a virtual environment: python -m venv env and source env/bin/activate  
+Create and activate a virtual environment: virtualenv env and source ./env/bin/activate  
 Install the required packages: pip install -r requirements.txt  
 Install ElectronJS: npm install electron  
 ## How to Run
 Start the Django server: python manage.py runserver  
-Start the ElectronJS app: npm start  
+Start the ElectronJS app: node_modules/electron/dist/electron . (run the command inside the same virtualenv itself)   
 Upload a video clip to the website and wait for the movie to be matched.  
