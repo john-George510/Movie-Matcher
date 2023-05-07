@@ -7,7 +7,7 @@ Movie Matcher is a project that takes in a video clip and uses facial recognitio
 [John George Chelamattom](https://github.com/john-George510)  
 [Adwaith H R](https://github.com/adwaithhr)
 ## Link to product walkthrough
-[link to video]
+[Link to Video](https://drive.google.com/file/d/11RMFCxaJxGwoEYGCk8AC_NuuoqYaZyLm/view?usp=share_link)  
 ## How it Works ?
 The user uploads a video clip to the Movie Matcher website. The website then uses the facial recognition model to analyze the clip and compare it to a database of known movies. The website returns the name of the movie if it's a match, or informs the user that the clip couldn't be matched.
 ## Libraries used
