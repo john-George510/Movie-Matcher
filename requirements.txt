@@ -1,5 +1,6 @@
 django
 django-cors-headers
+django-ndarray
 face-recognition
 opencv-python
 requests
