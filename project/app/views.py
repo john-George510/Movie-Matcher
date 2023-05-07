@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import face_recognition,cv2,requests
+import face_recognition,os,cv2,time,requests,tempfile
 from PIL import Image
 import numpy as np
 from .models import Actor
@@ -14,8 +14,10 @@ def home(request):
 def result(request):
     if request.method == 'POST':
         print(request.POST)
-        video_file=str(request.FILES['file'])
-        actors=actor_detect(video_file)
+        with tempfile.NamedTemporaryFile(suffix='.mp4') as temp_video:
+            for chunk in request.FILES['file'].chunks():
+                temp_video.write(chunk)
+            actors=actor_detect(temp_video.name)
         movie=movie_search(actors)
         details=movie_details(movie)
         return render(request,'result.html',{'movie':movie,'release_date':details['release_date'],'Overview':details['overview'],'Rating':details['vote_average'],'genres':details['genres'],'poster':details['poster_url']})
@@ -23,9 +25,9 @@ def result(request):
 def actor_detect(video_file):
     video_capture = cv2.VideoCapture(video_file)
     fps = round(video_capture.get(cv2.CAP_PROP_FPS))
-    frame_interval = 10
+    frame_interval = 5
     frame_count = 0
-    print('video captured')
+    print('videocaptured')
     actors_present=[]
     while True:
         ret, frame = video_capture.read()
@@ -36,7 +38,7 @@ def actor_detect(video_file):
             continue
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         face_locations = face_recognition.face_locations(frame_rgb)
-        # print("face_locations",face_locations,"\t\tclip time",frame_count/fps)
+        print("face_locations",face_locations,"\t\tclip time",frame_count/fps)
         for face_location in face_locations:
             top, right, bottom, left = face_location
             face_image = Image.fromarray(frame_rgb[top:bottom, left:right])
@@ -47,14 +49,19 @@ def actor_detect(video_file):
             else:
                 print("No faces detected in the image.")
                 continue
+            i=0
             for image in Actor.objects.all():
                 encoding=image.encoding
-                results=face_recognition.compare_faces([encoding],unknown_encoding)
+                results=face_recognition.compare_faces([encoding],unknown_encoding,tolerance=0.55)
+                distance=face_recognition.face_distance([encoding],unknown_encoding)
                 if results[0]:
+                    print(results)
                     actors_present.append(image.name)
-                    print(image.name,"is present")
+                    print(image.name,"is present with a confidence of",1-distance)
                     break
+    print(actors_present)
     return actors_present
+
 def movie_search(actors):
     
     movie_credits = {}
@@ -93,6 +100,7 @@ def movie_details(movie):
         "page": 1
     }
     response = requests.get('https://api.themoviedb.org/3' + search_endpoint, params=query_params)
+
     json_data = response.json()
     if json_data['total_results'] == 0:
         print('Movie not found.')
@@ -118,20 +126,13 @@ def movie_details(movie):
     return movie
 
 
-
-
-
-
-
-
-# code to add new actors to database
-# actors_dir = 'Actors'
-# actors=os.listdir(actors_dir)
-# for actor in actors:
-#     actor_images = os.listdir(os.path.join(actors_dir, actor))
-#     for image in actor_images:
-#         actor_image = face_recognition.load_image_file(os.path.join(actors_dir, actor, image))
-#         encoding=face_recognition.face_encodings(actor_image)[0]
-#         new_actor = Actor.objects.create(name=actor, encoding=encoding)
-#         new_actor.save()
-        
+# # code to add new actors to database
+# # actors_dir = 'Actors'
+# # actors=os.listdir(actors_dir)
+# # for actor in actors:
+# #     actor_images = os.listdir(os.path.join(actors_dir, actor))
+# #     for image in actor_images:
+# #         actor_image = face_recognition.load_image_file(os.path.join(actors_dir, actor, image))
+# #         encoding=face_recognition.face_encodings(actor_image)[0]
+# #         new_actor = Actor.objects.create(name=actor, encoding=encoding)
+# #         new_actor.save()
