@@ -2,6 +2,7 @@ from django.shortcuts import render
 import face_recognition,os,cv2,time,requests
 from PIL import Image
 import numpy as np
+from .models import Actor
 
 api_key = "95fd2f005505fb691f27cb9d308ede9f"
 base_url = "https://api.themoviedb.org/3"
@@ -14,7 +15,7 @@ def result(request):
     if request.method == 'POST':
         print(request.POST)
         video_file=str(request.FILES['file'])
-        # actors=actor_detect(video_file)
+        actors=actor_detect(video_file)
         movie=movie_search(['Zendaya Coleman','Timothee chalamet'])
         details=movie_details(movie)
         return render(request,'result.html',{'movie':movie,'release_date':details['release_date'],'Overview':details['overview'],'Rating':details['vote_average'],'genres':details['genres'],'poster':details['poster_url']})
@@ -26,7 +27,7 @@ def actor_detect(video_file):
     actor_encodings={}
     i=0
     type(actors)
-    for actor in actors[3:43]:
+    for actor in actors[3:5]:
         i+=1
         print(i,actor,'encoding',time.time()-start_time)
         actor_images = os.listdir(os.path.join(actors_dir, actor))
@@ -35,7 +36,8 @@ def actor_detect(video_file):
         for image in actor_images:
             print(image)
             actor_image = face_recognition.load_image_file(os.path.join(actors_dir, actor, image))
-            actor_encoding.append(face_recognition.face_encodings(actor_image)[0])
+            encoding=face_recognition.face_encodings(actor_image)[0]
+            actor_encoding.append(encoding)
         actor_encodings[actor] = actor_encoding
 
     video_capture = cv2.VideoCapture(video_file)

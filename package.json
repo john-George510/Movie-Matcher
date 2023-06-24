@@ -4,8 +4,9 @@
   "description": "![Electron Notion](https://user-images.githubusercontent.com/64391274/235363274-375ce61c-721f-4543-a150-1b99525d54ac.png)",
   "main": "index.js",
   "scripts": {
-    "start": "electron"
+    "start": "electron ."
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/john-George510/Movie-Matcher.git"
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/john-George510/Movie-Matcher#readme",
   "devDependencies": {
+    "@electron-forge/cli": "^6.1.1",
     "electron": "^24.2.0"
   },
   "dependencies": {
